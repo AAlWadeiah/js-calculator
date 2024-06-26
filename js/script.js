@@ -50,6 +50,47 @@ function operate(a, b, operator) {
   }
 }
 
-let num1;
-let num2;
-let operator;
+function isInteger(val) {
+  if (parseInt(val, 10).toString() === val) return true;
+  return false;
+}
+
+function parseInput(input) {
+  //   console.log(input);
+  if (isInteger(input)) {
+    // Check if this is the first number in the operation
+    if (operator === "") {
+      num1 = +input;
+    } else {
+      num2 = +input;
+    }
+  } else {
+    operator = input;
+  }
+  //   console.log(num1);
+  //   console.log(num2);
+  //   console.log(operator);
+}
+
+function buttonClickHandler(e) {
+  parseInput(e.target.value);
+  if (num1 && num2 && operator) {
+    result = `${operate(num1, num2, operator)}`;
+    console.log(`${num1} ${operator} ${num2} = ${result}`);
+    // clear numbers
+    num1 = NaN;
+    num2 = NaN;
+    operator = "";
+  }
+}
+
+let num1 = NaN;
+let num2 = NaN;
+let operator = "";
+let result = "";
+
+let buttons = document.querySelector("#button-section");
+buttons.addEventListener("click", buttonClickHandler);
+
+// TODO: "1.1" returns false for isInteger. Need to update it or create a new function that checks for floats
+// console.log(isInteger("1.1"));
