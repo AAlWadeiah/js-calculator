@@ -116,6 +116,9 @@ function evaluate(newOp = "") {
 function parseInput(input) {
   //   console.log(input);
   if (isInteger(input) || input === ".") {
+    // Do not allow multiple decimal points in number
+    if (input === "." && numArr1.includes("." || numArr2.includes("."))) return;
+
     if (operator === "") {
       // Check if this is the first number in the operation
       numArr1.push(input);
@@ -148,6 +151,8 @@ function buttonClickHandler(e) {
     updateDisplay(result);
   } else if (isInteger(input) || input === "." || isOperator(input)) {
     parseInput(input);
+  } else if (input === "bksp") {
+    // delete
   }
 }
 
@@ -157,6 +162,7 @@ let numArr1 = [];
 let numArr2 = [];
 let operator = "";
 let result = "";
+let memory = [];
 
 const MAX_OUTPUT_CHARS = 14;
 
