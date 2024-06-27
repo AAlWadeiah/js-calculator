@@ -38,12 +38,6 @@ function operate(a, b, operator) {
     case "/":
       return divide(a, b);
       break;
-    case "sq":
-      return sqrRoot(a);
-      break;
-    case "%":
-      return percentToDecimal(a);
-      break;
     default:
       console.warn(`Unhandled operator: ${operator}`);
       break;
@@ -63,7 +57,7 @@ function isInteger(val) {
 }
 
 function isOperator(val) {
-  return "+-/*%".split("").includes(val);
+  return "+-/*".split("").includes(val);
 }
 
 // console.log(isOperator("*"));
@@ -113,13 +107,57 @@ function evaluate(newOp = "") {
   operator = "";
 }
 
+function findLastNumInMem() {
+  if (memory.length) {
+    return memory.toReversed().forEach((element) => {
+      if (Array.isArray(element)) return element;
+    });
+  } else if (isNum1) {
+    return numArr1;
+  } else {
+    return [];
+  }
+}
+
+function isNum1() {
+  return operator === "";
+}
+
+function evalUnaryOperator(unaryOp) {
+  // Do nothing of a binary operator is set
+  // if (operator !== "") return
+
+  // Get last number from memory and apply unary operation to it
+  let lastNum = findLastNumInMem();
+  if (lastNum.length) {
+    if (isNum1()) {
+      if (unaryOp === "%") {
+      }
+      if (unaryOp === "sign") {
+        numArr1.unshift("-");
+        updateDisplay(constructNumber(numArr1));
+      }
+    } else {
+      if (unaryOp === "%") {
+      }
+      if (unaryOp === "sign") {
+        numArr2.unshift("-");
+        updateDisplay(constructNumber(numArr2));
+      }
+    }
+  } else {
+    console.warn("No number. Do nothing");
+    return;
+  }
+}
+
 function parseInput(input) {
   //   console.log(input);
   if (isInteger(input) || input === ".") {
     // Do not allow multiple decimal points in number
     if (input === "." && numArr1.includes("." || numArr2.includes("."))) return;
 
-    if (operator === "") {
+    if (isNum1()) {
       // Check if this is the first number in the operation
       numArr1.push(input);
       updateDisplay(constructNumber(numArr1));
@@ -131,6 +169,7 @@ function parseInput(input) {
     }
   } else {
     operator = input;
+    memory.push(constructNumber(numArr1));
     // console.log(operator);
   }
 }
@@ -151,6 +190,8 @@ function buttonClickHandler(e) {
     updateDisplay(result);
   } else if (isInteger(input) || input === "." || isOperator(input)) {
     parseInput(input);
+  } else if (input === "%" || input == "sign") {
+    evalUnaryOperator(input);
   } else if (input === "c") {
     // clear everything
     numArr1 = [];
@@ -159,6 +200,8 @@ function buttonClickHandler(e) {
     result = "";
     memory = [];
     updateDisplay("0");
+  } else if (input == "bksp") {
+    removeLastDigit(); //TODO: implement. Pop last digit from the last num in memory
   }
 }
 
