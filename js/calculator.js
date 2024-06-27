@@ -101,7 +101,7 @@ function evaluate(newOp = "") {
 
   let num1 = constructNumber(numArr1);
   let num2 = constructNumber(numArr2);
-  //   After evaluating the expression, need to know how much to round up to
+  //   After evaluating the expression,`` need to know how much to round up to
   let expOut = operate(num1, num2, operator);
   // If length whole digits of expOut is greater than MAX_OUTPUT_CHARS ...
   // If length of decimal digits + length of whole digits expOut is greater than MAX_OUTPUT_CHARS ...
@@ -127,22 +127,7 @@ function parseInput(input) {
       updateDisplay(constructNumber(numArr2));
       // console.log(numArr2);
     }
-  }
-  //   else if (input === "=") {
-  // if (numArr1.length > 0 && numArr2.length > 0 && operator) {
-  //   evaluate();
-  // } else {
-  //   console.error("Expression is incomplete");
-  //   // TODO: show error message to user and do not evaluate
-  // }
-  //   }
-  //   else if (isOperator(input) && operator !== "") {
-  //     // Operator is set and we get another operator
-  //     evaluate(); // evaluate and reset numArr1, numArr2, and operator
-  //     numArr1 = [result]; // set result of previous expression to be first num in new expression
-  //     operator = input; // set operator for new expression
-  //   }
-  else {
+  } else {
     operator = input;
     // console.log(operator);
   }
