@@ -87,15 +87,14 @@ function splitFloat(val) {
 function evaluate(newOp = "") {
   if (numArr1.length < 1 && numArr2.length < 1 && !operator) {
     console.error("Expression is incomplete");
-    // TODO: show error message to user and do not evaluate
+    // Do not do anything
     return;
   }
   if (newOp !== "") {
-    // TODO: there is a bug in this case. Need to fix
     // Operator is set and we get another operator
     evaluate(); // evaluate and reset numArr1, numArr2, and operator
     numArr1 = [result]; // set result of previous expression to be first num in new expression
-    operator = input; // set operator for new expression
+    operator = newOp; // set operator for new expression
     return; // Done evaluating first expression and ready for new expression
   }
 
@@ -159,7 +158,7 @@ let numArr2 = [];
 let operator = "";
 let result = "";
 
-const MAX_OUTPUT_CHARS = 9;
+const MAX_OUTPUT_CHARS = 14;
 
 let buttons = document.querySelector("#button-section");
 buttons.addEventListener("click", buttonClickHandler);

@@ -14,7 +14,7 @@ body {
 
 #calc-container {
     margin-top: 10%;
-    width: 350px;
+    width: 335px;
     /* width: 25%; */
     /* height: 50%; */
     display: flex;
@@ -38,7 +38,7 @@ body {
     border: 2px solid black;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
+    justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     margin: 8px;
@@ -46,19 +46,9 @@ body {
     background-color: lightgray;
 }
 
-/* #number-side {
-    border: 2px solid black;
+/* .row {
     display: flex;
-    flex: 1;
-    flex-wrap: wrap;
-
-}
-
-#operator-side {
-    border: 2px solid black;
-    display: flex;
-    flex: 1;
-    flex-wrap: wrap;
+    justify-content: space-around;
 } */
 
 button {
