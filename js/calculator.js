@@ -151,8 +151,14 @@ function buttonClickHandler(e) {
     updateDisplay(result);
   } else if (isInteger(input) || input === "." || isOperator(input)) {
     parseInput(input);
-  } else if (input === "bksp") {
-    // delete
+  } else if (input === "c") {
+    // clear everything
+    numArr1 = [];
+    numArr2 = [];
+    operator = "";
+    result = "";
+    memory = [];
+    updateDisplay("0");
   }
 }
 
