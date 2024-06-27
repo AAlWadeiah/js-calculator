@@ -78,12 +78,14 @@ function splitFloat(val) {
   return val.toString().split(".");
 }
 
-function evaluate(newOp = "") {
+function isBinaryExpressionReady() {
   if (numArr1.length < 1 && numArr2.length < 1 && !operator) {
-    console.error("Expression is incomplete");
-    // Do not do anything
-    return;
+    return false;
   }
+  return true;
+}
+
+function evaluate(newOp = "") {
   if (newOp !== "") {
     // Operator is set and we get another operator
     evaluate(); // evaluate and reset numArr1, numArr2, and operator
@@ -112,8 +114,11 @@ function isNum1() {
 }
 
 function evalUnaryOperator(unaryOp) {
-  if (isNum1() || !numArr2.length) {
+  if (numArr1.length > 0 && (isNum1() || !numArr2.length)) {
     if (unaryOp === "%") {
+      let p = percentToDecimal(constructNumber(numArr1));
+      numArr1 = Array.from(p.toString());
+      updateDisplay(constructNumber(numArr1));
     }
     if (unaryOp === "sign") {
       numArr1.unshift("-");
@@ -121,17 +126,17 @@ function evalUnaryOperator(unaryOp) {
     }
   } else if (numArr2.length) {
     if (unaryOp === "%") {
+      let p = percentToDecimal(constructNumber(numArr2));
+      numArr2 = Array.from(p.toString());
+      updateDisplay(constructNumber(numArr2));
     }
     if (unaryOp === "sign") {
       numArr2.unshift("-");
       updateDisplay(constructNumber(numArr2));
     }
   } else {
-    if (numArr2.length) {
-    } else {
-      console.warn("No number. Do nothing");
-      return;
-    }
+    console.warn("No number. Do nothing");
+    return;
   }
 }
 
@@ -164,7 +169,11 @@ function buttonClickHandler(e) {
   if (input === "=") {
     evaluate();
     updateDisplay(result);
-  } else if (isOperator(input) && operator !== "") {
+  } else if (
+    isOperator(input) &&
+    operator !== "" &&
+    isBinaryExpressionReady()
+  ) {
     evaluate(input);
     updateDisplay(result);
   } else if (isInteger(input) || input === "." || isOperator(input)) {
