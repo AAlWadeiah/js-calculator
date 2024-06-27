@@ -79,10 +79,8 @@ function splitFloat(val) {
 }
 
 function isBinaryExpressionReady() {
-  if (numArr1.length < 1 && numArr2.length < 1 && !operator) {
-    return false;
-  }
-  return true;
+  if (numArr1.length > 0 && numArr2.length > 0 && operator !== "") return true;
+  else return false;
 }
 
 function evaluate(newOp = "") {
@@ -153,8 +151,11 @@ function parseInput(input) {
       numArr2.push(input);
       updateDisplay(constructNumber(numArr2));
     }
-  } else {
+  } else if (operator === "") {
     operator = input;
+  } else {
+    // Do nothing
+    return;
   }
 }
 
