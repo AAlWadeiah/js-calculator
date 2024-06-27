@@ -112,7 +112,7 @@ function isNum1() {
 }
 
 function evalUnaryOperator(unaryOp) {
-  if (numArr1.length > 0 && (isNum1() || !numArr2.length)) {
+  if (numArr1.length && (isNum1() || !numArr2.length)) {
     if (unaryOp === "%") {
       let p = percentToDecimal(constructNumber(numArr1));
       numArr1 = Array.from(p.toString());
@@ -159,6 +159,21 @@ function parseInput(input) {
   }
 }
 
+function removeLastDigit() {
+  if (numArr1.length && (isNum1() || !numArr2.length)) {
+    console.log(numArr1.pop());
+    if (numArr1.length) updateDisplay(constructNumber(numArr1));
+    else updateDisplay(0);
+  } else if (numArr2.length) {
+    console.log(numArr2.pop());
+    if (numArr2.length) updateDisplay(constructNumber(numArr2));
+    else updateDisplay(0);
+  } else {
+    console.warn("No number. Do nothing");
+    return;
+  }
+}
+
 function updateDisplay(output) {
   let ioDisplay = document.querySelector("#io-display");
   ioDisplay.textContent = output;
@@ -167,7 +182,7 @@ function updateDisplay(output) {
 function buttonClickHandler(e) {
   let input = e.target.value;
 
-  if (input === "=") {
+  if (input === "=" && isBinaryExpressionReady()) {
     evaluate();
     updateDisplay(result);
   } else if (
